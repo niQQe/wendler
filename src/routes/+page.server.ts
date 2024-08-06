@@ -1,44 +1,98 @@
-import { getOrCreateUserProfile } from "$lib/auth";
-import { db } from "$lib/db/index.js";
-import { profileTable } from "$lib/db/schema.js";
-import { error } from "@sveltejs/kit";
-import { eq } from "drizzle-orm";
-import { zfd } from "zod-form-data";
+import type { PageServerLoad, Actions } from './$types';
+import { db } from '$lib/db/index.js';
+import { eq } from 'drizzle-orm';
+import { exerciseTable } from '$lib/db/schema.js';
 
 export const load = async ({ locals }) => {
-  const userProfile = await getOrCreateUserProfile(locals);
+	const { user } = await locals.safeGetSession();
 
-  return {
-    userProfile,
-  };
+	if (!user) {
+		return { user: null };
+	}
+
+	const exercises = await db.query.exerciseTable.findMany();
+
+	return { user, exercises };
 };
 
-export const actions = {
-  default: async ({ request, locals }) => {
-    const userProfile = await getOrCreateUserProfile(locals);
+export const actions: Actions = {
+	addExercise: async ({ request, locals }) => {
+		const { user } = await locals.safeGetSession();
+		if (!user) {
+			return null;
+		}
 
-    if (!userProfile) {
-      error(401, "You need to be logged in!");
-    }
+		const formData = await request.formData();
 
-    const schema = zfd.formData({
-      firstName: zfd.text(),
-      lastName: zfd.text(),
-      email: zfd.text(),
-    });
+		const formObject: Record<string, string | number> = {};
 
-    const { data } = schema.safeParse(await request.formData());
+		formData.forEach((value: FormDataEntryValue, key: string) => {
+			formObject[key] = value as string;
+		});
 
-    if (!data) {
-      error(400, "Invalid form data");
-    }
+		const newExercise = {
+			userid: user.id,
+			max_weight: (formObject.max_weight as number) || 0,
+			name: (formObject.name as string) || ''
+		};
 
-    await db.update(profileTable).set({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-    }).where(eq(profileTable.id, userProfile.id));
+		try {
+			const response = await db
+				.insert(exerciseTable)
+				.values({ ...newExercise, userid: user.id } as any)
+				.returning({ id: exerciseTable.id });
 
-    return { success: true };
-  },
+			return response[0].id;
+		} catch (error) {
+			return {
+				success: false
+			};
+		}
+	},
+	deleteExercise: async ({ request, locals }) => {
+		const { user } = await locals.safeGetSession();
+
+		if (!user) {
+			return null;
+		}
+
+		const formData = await request.formData();
+		const formObject: Record<string, string | number> = {};
+
+		formData.forEach((value: FormDataEntryValue, key: string) => {
+			formObject[key] = value as string;
+		});
+		try {
+			const response = await db
+				.delete(exerciseTable)
+				.where(eq(exerciseTable.id, String(formObject.id)));
+
+			console.log(response);
+
+			return formObject.id;
+		} catch (error) {
+			return {
+				success: false
+			};
+		}
+	},
+	upateMaxWeight: async ({ request, locals }) => {
+		const { user } = await locals.safeGetSession();
+		if (!user) {
+			return null;
+		}
+
+		const formData = await request.formData();
+
+		const formObject: Record<string, string | number> = {};
+
+		formData.forEach((value: FormDataEntryValue, key: string) => {
+			formObject[key] = value as string;
+		});
+
+		const response = await db
+			.update(exerciseTable)
+			.set({ max_weight: +formObject.max_weight })
+			.where(eq(exerciseTable.id, String(formObject.id)));
+	}
 };

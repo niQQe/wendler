@@ -1,78 +1,68 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
- 
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
- 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
- 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
- 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
- 
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
- 
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
- 
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
- 
-    --destructive: 0 72.2% 50.6%;
-    --destructive-foreground: 0 0% 98%;
- 
-    --ring: 0 0% 3.9%;
- 
-    --radius: 0.5rem;
-  }
- 
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
- 
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
- 
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
- 
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
- 
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
- 
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
- 
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
- 
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
- 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
- 
-    --ring: 0 0% 83.1%;
-  }
+
+
+@font-face {
+    font-family: 'Geist';
+    font-style: normal;
+    font-weight: normal;
+    src: url('$lib/fonts/Geist-Regular.woff') format('woff');
 }
- 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+
+@font-face {
+    font-family: 'Geist';
+    font-style: bold;
+    font-weight: bold;
+    src: url('$lib/fonts/Geist-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Geist';
+    font-style: medium;
+    font-weight: medium;
+    src: url('$lib/fonts/Geist-SemiBold.woff') format('woff');
+}
+
+html,body{
+	height:100%;
+	font-family: 'Geist', sans-serif;	
+}
+
+body{
+	min-height:100%;
+	background:#f8f8f8;
+	color:#18181b;
+}
+
+input {
+	border-radius:6px;
+	height:40px;
+	padding:0px 10px;
+	font-size:14px;
+	box-shadow: 0px 0px 0px 1px #18181b24
+}
+
+input::placeholder{
+	font-weight:400!important;
+	font-size:14px;
+	font-family:'Roboto', sans-serif;
+}
+
+input:focus{
+	outline:none;
+	box-shadow: 0px 0px 0px 2px #18181b
+}
+
+h1{
+	font-weight:700;
+	font-size: 30px;
+}
+
+button{
+	padding:5px 15px;	
+	font-weight:600;
+
+	display:flex;
+	align-items: center;
 }

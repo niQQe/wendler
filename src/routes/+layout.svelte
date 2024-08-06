@@ -26,8 +26,7 @@
 	});
 </script>
 
-<div>
-	<h2>Hello from Layout</h2>
+<div class="h-full w-full">
 	{@render children()}
 </div>
 
