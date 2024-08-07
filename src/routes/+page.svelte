@@ -58,7 +58,7 @@
 		inputElement.focus();
 	};
 
-	let exercises: ExerciseInfoType[] = $state([...data.exercises]);
+	let exercises: ExerciseInfoType[] = $state(data.exercises ? [...data.exercises] : []);
 
 	const currentWeights = $derived(() => {
 		return exercises.map((exercise) => {
