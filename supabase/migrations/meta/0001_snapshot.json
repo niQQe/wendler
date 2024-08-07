@@ -1,6 +1,6 @@
 {
-  "id": "fe798ccc-62a9-47b4-960e-0a33f02700aa",
-  "prevId": "07f0ae1b-aaf1-45e1-9ee2-6ad9f7450a9f",
+  "id": "9e440ada-beb7-4da5-bfc7-8dfe294265bf",
+  "prevId": "1287ee47-bbdf-4beb-8aeb-326e17fd1869",
   "version": "6",
   "dialect": "postgresql",
   "tables": {
@@ -17,24 +17,6 @@
         "userid": {
           "name": "userid",
           "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "max_weight": {
-          "name": "max_weight",
-          "type": "double precision",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
           "primaryKey": false,
           "notNull": true
         }

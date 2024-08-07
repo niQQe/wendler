@@ -1,11 +1,11 @@
 {
-  "id": "1287ee47-bbdf-4beb-8aeb-326e17fd1869",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "76c3855b-3ba8-40dd-a4e9-254dd13059c2",
+  "prevId": "9e440ada-beb7-4da5-bfc7-8dfe294265bf",
   "version": "6",
   "dialect": "postgresql",
   "tables": {
-    "public.exercises": {
-      "name": "exercises",
+    "public.profile": {
+      "name": "profile",
       "schema": "",
       "columns": {
         "id": {
@@ -17,24 +17,6 @@
         "userid": {
           "name": "userid",
           "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "max_weight": {
-          "name": "max_weight",
-          "type": "double precision",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
           "primaryKey": false,
           "notNull": true
         }

@@ -1,6 +1,6 @@
 {
-  "id": "1287ee47-bbdf-4beb-8aeb-326e17fd1869",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "668acbb7-8ddd-4af3-9077-59d72bab41da",
+  "prevId": "76c3855b-3ba8-40dd-a4e9-254dd13059c2",
   "version": "6",
   "dialect": "postgresql",
   "tables": {
@@ -20,15 +20,15 @@
           "primaryKey": false,
           "notNull": true
         },
-        "max_weight": {
-          "name": "max_weight",
-          "type": "double precision",
-          "primaryKey": false,
-          "notNull": true
-        },
         "name": {
           "name": "name",
           "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "weight": {
+          "name": "weight",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": true
         },

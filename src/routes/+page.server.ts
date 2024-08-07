@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm';
 import { exerciseTable } from '$lib/db/schema.js';
 
 export const load = async ({ locals }) => {
-	const { user } = await locals.safeGetSession();
+	const { user  } = await locals.safeGetSession();
 
 	if (!user) {
 		return { user: null };
