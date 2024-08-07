@@ -3,6 +3,8 @@ import { db } from '$lib/db/index.js';
 import { eq } from 'drizzle-orm';
 import { exerciseTable } from '$lib/db/schema.js';
 
+let debounceId = null;
+
 export const load = async ({ locals }) => {
 	const { user } = await locals.safeGetSession();
 
@@ -10,7 +12,10 @@ export const load = async ({ locals }) => {
 		return { user: null };
 	}
 
-	const exercises = await db.query.exerciseTable.findMany();
+	const exercises = await db.query.exerciseTable.findMany({
+		where: eq(exerciseTable.userid, user.id),
+		orderBy: exerciseTable.created_at
+	});
 
 	return { user, exercises };
 };
@@ -90,9 +95,13 @@ export const actions: Actions = {
 			formObject[key] = value as string;
 		});
 
-		const response = await db
-			.update(exerciseTable)
-			.set({ max_weight: +formObject.max_weight })
-			.where(eq(exerciseTable.id, String(formObject.id)));
+		clearTimeout(debounceId);
+		debounceId = setTimeout(async () => {
+			console.log('SPARAS');
+			const response = await db
+				.update(exerciseTable)
+				.set({ max_weight: +formObject.max_weight })
+				.where(eq(exerciseTable.id, String(formObject.id)));
+		}, 1000);
 	}
 };

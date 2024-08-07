@@ -3,8 +3,14 @@
 	const dispatch = createEventDispatcher();
 	import { enhance } from '$app/forms';
 
-	const { exercise, showDeleteButton, currentWeights, i: wi, weightPercentagesAndReps, selectedWeek } =
-		$props() as any;
+	const {
+		exercise,
+		showDeleteButton,
+		currentWeights,
+		i: wi,
+		weightPercentagesAndReps,
+		selectedWeek
+	} = $props() as any;
 </script>
 
 <div
@@ -24,13 +30,7 @@
 						use:enhance={({ formData }) => {
 							formData.set('max_weight', String(exercise.max_weight - 2.5));
 							formData.set('id', exercise.id);
-							return ({ result }) => {
-								if (result.type === 'success') {
-									dispatch('decrement');
-								} else {
-									alert('ERROR!');
-								}
-							};
+							dispatch('decrement');
 						}}
 					>
 						<button
@@ -52,13 +52,7 @@
 						use:enhance={({ formData }) => {
 							formData.set('max_weight', String(exercise.max_weight + 2.5));
 							formData.set('id', exercise.id);
-							return ({ result }) => {
-								if (result.type === 'success') {
-									dispatch('increment');
-								} else {
-									alert('ERROR!');
-								}
-							};
+							dispatch('increment');
 						}}
 					>
 						<button
@@ -98,7 +92,7 @@
 							class="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-[#18181b] bg-opacity-10 text-[13px] font-semibold text-[#18181b]"
 							style="line-height:15px"
 						>
-							{weightPercentagesAndReps[selectedWeek].reps[i] }
+							{weightPercentagesAndReps[selectedWeek].reps[i]}
 						</div>
 						<div class="flex items-end gap-1 text-2xl" style="font-weight:800;">
 							{weight}

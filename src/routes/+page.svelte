@@ -58,7 +58,7 @@
 		inputElement.focus();
 	};
 
-	let exercises: ExerciseInfoType[] = $state([]);
+	let exercises: ExerciseInfoType[] = $state([...data.exercises]);
 
 	const currentWeights = $derived(() => {
 		return exercises.map((exercise) => {
@@ -66,13 +66,6 @@
 				(exercise.max_weight * percentage).toFixed(1)
 			);
 		});
-	});
-
-	
-	$effect(() => {
-		if (data.exercises) {
-			exercises = [...data.exercises];
-		}
 	});
 </script>
 
