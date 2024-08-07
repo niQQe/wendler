@@ -1,0 +1,1 @@
+ALTER TABLE "exercises" ALTER COLUMN "id" SET DATA TYPE uuid;

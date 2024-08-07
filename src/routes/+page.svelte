@@ -41,6 +41,7 @@
 	const handleAddExercise = async (id: any) => {
 		const newExercise = { ...exerciseForm, max_weight: +exerciseForm.max_weight, id };
 		exercises = [...exercises, newExercise];
+		console.log('ADD EXERCISE');
 	};
 
 	const handleDeleteExercise = (id: string) => {
@@ -64,9 +65,10 @@
 			return weightPercentagesAndReps[selectedWeek].percentages.map((percentage) =>
 				(exercise.max_weight * percentage).toFixed(1)
 			);
-		})[0];
+		});
 	});
 
+	
 	$effect(() => {
 		if (data.exercises) {
 			exercises = [...data.exercises];
@@ -197,9 +199,10 @@
 								</div>
 							{:else}
 								<div class="flex flex-col gap-3">
-									{#each exercises as exercise}
+									{#each exercises as exercise, i}
 										<Exercise
 											{exercise}
+											{i}
 											{showDeleteButton}
 											on:deletedExerciseId={({ detail: { id } }) => handleDeleteExercise(id)}
 											on:increment={() => (exercise.max_weight += 2.5)}

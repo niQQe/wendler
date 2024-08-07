@@ -5,5 +5,5 @@ export const exerciseTable = pgTable('exercises', {
 	userid: text('userid').notNull(),
 	name: text('name').notNull(),
 	max_weight: doublePrecision('max_weight').notNull(),
-	created_at: timestamp('created_at').notNull(),
+	created_at: timestamp('created_at')
 });
