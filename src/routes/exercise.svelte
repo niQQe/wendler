@@ -3,7 +3,7 @@
 	const dispatch = createEventDispatcher();
 	import { enhance } from '$app/forms';
 
-	const { exercise, showDeleteButton, currentWeights, i, weightPercentagesAndReps, selectedWeek } =
+	const { exercise, showDeleteButton, currentWeights, i: wi, weightPercentagesAndReps, selectedWeek } =
 		$props() as any;
 </script>
 
@@ -91,14 +91,14 @@
 			</div>
 		</div>
 		<div class="flex divide-x divide-gray-300 border-t py-4 font-medium">
-			{#each currentWeights()[i] as weight}
+			{#each currentWeights()[wi] as weight, i}
 				<div class="flex flex-1 items-center justify-center">
 					<div class="flex flex-col items-center gap-1.5">
 						<div
 							class="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-[#18181b] bg-opacity-10 text-[13px] font-semibold text-[#18181b]"
 							style="line-height:15px"
 						>
-							{weightPercentagesAndReps[selectedWeek].reps[i]}
+							{weightPercentagesAndReps[selectedWeek].reps[i] }
 						</div>
 						<div class="flex items-end gap-1 text-2xl" style="font-weight:800;">
 							{weight}
