@@ -85,6 +85,12 @@
 			});
 		}, 500);
 	};
+
+	$effect(() => {
+		if (data.exercises) {
+			exercises = [...data.exercises];
+		}
+	});
 </script>
 
 {#if data.user}

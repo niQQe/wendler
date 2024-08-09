@@ -8,7 +8,6 @@
 
 	let { showNewExerciseForm = $bindable() } = $props();
 
-	let inputElement: HTMLElement | null = $state(null);
 	let exerciseForm: ExerciseInfoType = $state({
 		id: '',
 		name: '',
@@ -36,7 +35,6 @@
 							<label for="exerciseName" class="text-sm font-medium">Exercise name</label>
 							<input
 								id="exerciseName"
-								bind:this={inputElement}
 								placeholder="Benchpress"
 								bind:value={exerciseForm.name}
 								type="text"

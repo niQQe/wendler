@@ -4,7 +4,6 @@ import { eq } from 'drizzle-orm';
 import { exerciseTable } from '$lib/db/schema.js';
 
 export const load = async ({ locals }) => {
-	console.log('halå');
 	const { user } = await locals.safeGetSession();
 
 	if (!user) {
@@ -42,8 +41,7 @@ export const actions: Actions = {
 
 		const response = await db
 			.insert(exerciseTable)
-			.values({ ...newExercise, userid: user.id } as any)
-			.returning({ id: exerciseTable.id });
+			.values({ ...newExercise, userid: user.id } as any);
 	},
 	deleteExercise: async ({ request, locals }) => {
 		const { user } = await locals.safeGetSession();
@@ -62,8 +60,6 @@ export const actions: Actions = {
 			const response = await db
 				.delete(exerciseTable)
 				.where(eq(exerciseTable.id, String(formObject.id)));
-
-			console.log(response);
 
 			return formObject.id;
 		} catch (error) {
