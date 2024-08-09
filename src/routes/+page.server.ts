@@ -3,9 +3,8 @@ import { db } from '$lib/db/index.js';
 import { eq } from 'drizzle-orm';
 import { exerciseTable } from '$lib/db/schema.js';
 
-let debounceId = null;
-
 export const load = async ({ locals }) => {
+	console.log('halå');
 	const { user } = await locals.safeGetSession();
 
 	if (!user) {
@@ -41,18 +40,10 @@ export const actions: Actions = {
 			name: (formObject.name as string) || ''
 		};
 
-		try {
-			const response = await db
-				.insert(exerciseTable)
-				.values({ ...newExercise, userid: user.id } as any)
-				.returning({ id: exerciseTable.id });
-
-			return response[0].id;
-		} catch (error) {
-			return {
-				success: false
-			};
-		}
+		const response = await db
+			.insert(exerciseTable)
+			.values({ ...newExercise, userid: user.id } as any)
+			.returning({ id: exerciseTable.id });
 	},
 	deleteExercise: async ({ request, locals }) => {
 		const { user } = await locals.safeGetSession();
@@ -81,27 +72,22 @@ export const actions: Actions = {
 			};
 		}
 	},
-	upateMaxWeight: async ({ request, locals }) => {
+	updateMaxWeight: async ({ request, locals }) => {
 		const { user } = await locals.safeGetSession();
 		if (!user) {
 			return null;
 		}
 
 		const formData = await request.formData();
-
 		const formObject: Record<string, string | number> = {};
 
 		formData.forEach((value: FormDataEntryValue, key: string) => {
 			formObject[key] = value as string;
 		});
 
-		clearTimeout(debounceId);
-		debounceId = setTimeout(async () => {
-			console.log('SPARAS');
-			const response = await db
-				.update(exerciseTable)
-				.set({ max_weight: +formObject.max_weight })
-				.where(eq(exerciseTable.id, String(formObject.id)));
-		}, 1000);
+		await db
+			.update(exerciseTable)
+			.set({ max_weight: +formObject.max_weight })
+			.where(eq(exerciseTable.id, String(formObject.id)));
 	}
 };

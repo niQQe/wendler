@@ -1,66 +1,67 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
 	import { enhance } from '$app/forms';
+
+	type ExerciseInfoType = {
+		id: string;
+		name: string;
+		max_weight: number;
+	};
+
+	interface ExerciseProps {
+		exercise: ExerciseInfoType;
+		showDeleteButton: boolean;
+		currentWeights: any;
+		handleUpdateMaxWeight: (
+			id: string,
+			maxWeight: number,
+			action: 'increment' | 'decrement',
+			index: number
+		) => void;
+		i: number;
+		weightPercentagesAndReps: Record<string, Record<string, any[]>>;
+		selectedWeek: string;
+	}
 
 	const {
 		exercise,
 		showDeleteButton,
 		currentWeights,
+		handleUpdateMaxWeight,
 		i: wi,
 		weightPercentagesAndReps,
 		selectedWeek
-	} = $props() as any;
+	}: ExerciseProps = $props();
 </script>
 
 <div
-	class="relative flex gap-3 overflow-hidden rounded-xl border border-gray-200"
+	class="border-gray-100 relative flex gap-3 overflow-hidden rounded-xl border bg-white"
 	style="box-shadow:0px 2px 2px #00000008"
 >
-	<div class="flex w-full flex-col gap-4">
-		<div class="flex w-full items-center justify-between p-4 pb-0">
-			<div class="truncate text-[18px] font-bold">
+	<div class="flex w-full flex-col">
+		<div class="flex w-full items-center justify-between gap-1 p-4">
+			<div class="flex-1 truncate text-[18px] font-bold">
 				{exercise.name}
 			</div>
 			<div class="left-0 flex items-center justify-center gap-3 text-center font-semibold">
 				<div class="flex items-center">
-					<form
-						method="post"
-						action="?/upateMaxWeight"
-						use:enhance={({ formData }) => {
-							formData.set('max_weight', String(exercise.max_weight - 2.5));
-							formData.set('id', exercise.id);
-							dispatch('decrement');
-						}}
+					<button
+						onclick={() => handleUpdateMaxWeight(exercise.id, exercise.max_weight, 'decrement', wi)}
+						class="flex rounded rounded-br-none rounded-tr-none border border-gray-200 bg-gray-100 p-1.5"
 					>
-						<button
-							class="flex rounded rounded-br-none rounded-tr-none border border-gray-200 bg-gray-100 p-1.5"
-						>
-							<span class="material-symbols-outlined m-auto text-[22px]"> Remove </span>
-						</button>
-					</form>
-
+						<span class="material-symbols-outlined m-auto text-[22px]"> Remove </span>
+					</button>
 					<div
-						class="flex h-[36px] min-w-[80px] items-center justify-center gap-1 border-b border-t border-gray-200 py-0.5 font-bold"
+						class="flex h-[36px] min-w-[80px] items-center justify-center gap-1 border-b border-t border-gray-200 font-bold"
 						style="font-variant-numeric:tabular-nums;line-height:15px;"
 					>
 						{exercise.max_weight} <span class="mt-[3px] text-xs font-normal text-gray-500">KG</span>
 					</div>
-					<form
-						method="post"
-						action="?/upateMaxWeight"
-						use:enhance={({ formData }) => {
-							formData.set('max_weight', String(exercise.max_weight + 2.5));
-							formData.set('id', exercise.id);
-							dispatch('increment');
-						}}
+					<button
+						onclick={() => handleUpdateMaxWeight(exercise.id, exercise.max_weight, 'increment', wi)}
+						class=" flex rounded rounded-bl-none rounded-tl-none border border-gray-200 bg-gray-100 p-1.5"
 					>
-						<button
-							class=" flex rounded rounded-bl-none rounded-tl-none border border-gray-200 bg-gray-100 p-1.5"
-						>
-							<span class="material-symbols-outlined m-auto text-[22px]"> Add </span>
-						</button>
-					</form>
+						<span class="material-symbols-outlined m-auto text-[22px]"> Add </span>
+					</button>
 				</div>
 				{#if showDeleteButton}
 					<form
@@ -68,13 +69,6 @@
 						action="?/deleteExercise"
 						use:enhance={({ formData }) => {
 							formData.set('id', exercise.id);
-							return ({ result }) => {
-								if (result.type === 'success') {
-									dispatch('deletedExerciseId', { id: result.data });
-								} else {
-									alert('ERROR!');
-								}
-							};
 						}}
 					>
 						<button type="submit" class="rounded border bg-opacity-10 p-1.5">
