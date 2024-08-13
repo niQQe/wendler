@@ -29,15 +29,15 @@
 	const weightPercentagesAndReps = {
 		light: {
 			reps: [5, 5, 5],
-			percentages: [0.65, 0.7, 0.75]
+			percentages: [0.65, 0.75, 0.85]
 		},
 		medium: {
 			reps: [3, 3, 3],
-			percentages: [0.75, 0.8, 0.85]
+			percentages: [0.70, 0.8, 0.90]
 		},
 		heavy: {
 			reps: [5, 3, 1],
-			percentages: [0.85, 0.9, 0.95]
+			percentages: [0.75, 0.85, 0.95]
 		}
 	};
 
